@@ -47,6 +47,7 @@ using namespace std;
 #define mkpr make_pair
 #define pii pair<int, int>
 #define PI acos(-1)
+#define ll long long
 
 char CRTBUFF[BUFFSIZE];
 #define dbg(args...) {cout<<"-->";debugger::call(#args,args);cout<<"\n";}
