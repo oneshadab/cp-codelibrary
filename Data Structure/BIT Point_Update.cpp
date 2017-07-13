@@ -15,8 +15,8 @@ using namespace std;
 #define BCLR(a,x) ((a)&(~(1<<(x))))
 #define BTGL(a,x) ((a)^(1<<(x)))
 #define FMT(...) (sprintf(CRTBUFF, __VA_ARGS__)?CRTBUFF:0)
-#define read() freopen("input.txt","r",stdin)
-#define write() freopen("output.txt","w",stdout)
+#define read() freopen("C:\\Users\\fahim\\Documents\\GIT\\PCTemplate\\Clion_IO\\input.txt","r",stdin)
+#define write() freopen("C:\\Users\\fahim\\Documents\\GIT\\PCTemplate\\Clion_IO\\output.txt","w",stdout)
 #define cpp_io() {ios_base::sync_with_stdio(false);cin.tie(NULL);}
 #define BUFFSIZE 30000
 #define INF 1000000000
@@ -63,6 +63,7 @@ ll rangeSum(int low, int high) {
 int main(){
 #ifndef ONLINE_JUDGE
     read();
+    write();
 #endif // ONLINE_JUDGE
 
     int T, m, x, y, z;
