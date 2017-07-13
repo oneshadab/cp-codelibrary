@@ -74,5 +74,5 @@ int main(){
     cin.tie(0);
     cout.tie(0);
 
-    cout<<"HI\n";
+    cout<<"Hello World\n";
 }
