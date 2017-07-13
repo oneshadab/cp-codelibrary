@@ -43,22 +43,29 @@ struct debugger {
 
 /* Template Code Ends*/
 
-ll bit[MAX]; int N; // SET N ** IMPORTANT
+struct BIT{
+    ll bit[MAX]; int N;
 
-ll get(int p) {  // returns sum from 1 to p
-    ll res = 0;
-    for (; p >= 0; p = (p & (p + 1)) - 1) res += bit[p];
-    return res;
-}
-
-void update(int p, ll val) {  // point update
-    for (; p < N + 1; p = (p | (p + 1)))
-        bit[p] += val;
-}
-
-ll rangeSum(int low, int high) {
-    return get(high) - (low == 0 ? 0 : get(low - 1));
-}
+    ll get(int p) {  // returns sum from 1 to p
+        ll res = 0;
+        for (; p >= 0; p = (p & (p + 1)) - 1) res += bit[p];
+        return res;
+    }
+    void update(int p, ll val) {  // point update
+        for (; p < N + 1; p = (p | (p + 1)))
+            bit[p] += val;
+    }
+    ll rangeSum(int low, int high) {
+        return get(high) - (low == 0 ? 0 : get(low - 1));
+    }
+    void reset(){
+        MEM(bit, 0);
+    }
+    void init(int n){
+        reset();
+        N=n;
+    }
+}mBit;
 
 int main(){
 #ifndef ONLINE_JUDGE
@@ -66,31 +73,31 @@ int main(){
     write();
 #endif // ONLINE_JUDGE
 
-    int T, m, x, y, z;
+    int T, n, m, x, y, z;
     scanf("%d", &T);
     FORR(cs, 1, T + 1) {
-        MEM(bit, 0);
-        scanf("%d%d", &N, &m);
-        FOR(i, N) {
+        scanf("%d%d", &n, &m);
+        mBit.init(n);
+        FOR(i, n) {
             scanf("%d", &x);
-            update(i + 1, x);
+            mBit.update(i + 1, x);
         }
         printf("Case %d:\n", cs);
         FOR(QRY, m) {
             scanf("%d", &x);
             if (x == 1) {
                 scanf("%d", &y);
-                int v = rangeSum(y + 1, y + 1);
+                ll v = mBit.rangeSum(y + 1, y + 1);
                 printf("%d\n", v);
-                update(y + 1, -v);
+                mBit.update(y + 1, -v);
             }
             else if (x == 2) {
                 scanf("%d %d", &y, &z);
-                update(y + 1, z);
+                mBit.update(y + 1, z);
             }
             else {
                 scanf("%d %d", &y, &z);
-                printf("%lld\n", rangeSum(y + 1, z + 1));
+                printf("%lld\n", mBit.rangeSum(y + 1, z + 1));
             }
         }
     }
