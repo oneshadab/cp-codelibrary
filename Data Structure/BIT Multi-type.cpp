@@ -1,40 +1,33 @@
+//COMMENTS
+/* ****** 0 based BIT ******
+ * Source: http://code-library.herokuapp.com/fenwick-tree-extended/java
+ * There are 3 kinds of BIT functions based on query and update:
+ * 1. Point Update Range Query (PURQ)
+ * 2. Range Update Point Query (RUPQ)
+ * 3. Range Update Range Query (RURQ)
+ */
+//_COMMENTS
+
 #include <bits/stdc++.h>
 
 using namespace std;
 
 #define MEM(a,x) memset(a,x,sizeof(a))
-#define MAX 300001
+#define MAX 300000
 #define ll long long
 
-//COMMENTS
-/* ****** 0 based BIT ******
- * There are 3 kinds of BIT functions based on query and update:
- * 1. Point Update Range Query (PURQ)
- * 2. Range Update Point Query (RUPQ)
- * 3. Range Update Range Query (RURQ)
- * Only one kind of functions will work at a given time. I.e. you can not use PURQ functions
- * and then use RUPQ functions in a single code. */
-//_COMMENTS
+struct BIT_PURQ{
+    ll bit[MAX]; int N;
 
-struct BIT{
-    ll bit[MAX], bit1[MAX]; int N;
+    void init(int n){ MEM(bit, 0); N=n; }
 
-    void init(int n, bool resetRURQ){
-        MEM(bit, 0);
-        if(resetRURQ)MEM(bit1,0);
-        N=n;
-    }
     void create_from_vector(vector<int> a) {
         for (int i = 0; i < N; i++) {
             bit[i] += a[i];
             int j = i | (i + 1);
-            if (j < N)
-                bit[j] += bit[i];
+            if (j < N) bit[j] += bit[i];
         }
     }
-    //return min P where sum bit[0..p]
-
-    /****** Point Update Range Query ******/
     // bit[i] += value
     void add(int i, ll value) {
         for (; i < N; i |= i + 1)
@@ -59,88 +52,122 @@ struct BIT{
     void set_v(int i, ll value) {
         add(i, -get(i) + value);
     }
+};
 
-    /****** Range Update Point Query ******/
-    // add 'value' to each element of bit, from a to b
+struct BIT_RUPQ{
+    ll bit[MAX]; int N;
+
+    void init(int n){ MEM(bit, 0); N=n; }
+
+    void create_from_vector(vector<int> a) {
+        for (int i = 0; i < N; i++) {
+            bit[i] += a[i];
+            int j = i | (i + 1);
+            if (j < N) bit[j] += bit[i];
+        }
+    }
+    // bit[i] += value
+    void add(int i, ll value) {
+        for (; i < N; i |= i + 1)
+            bit[i] += value;
+    }
+    // *use this add*
     void add(int a, int b, ll value) {
         add(a, value);
         add(b + 1, -value);
     }
     // return value of bit[i]
-    ll get_rupq(int i) {
-        return sum(i);
+    ll get(int i) {
+        ll res = 0;
+        for (; i >= 0; i = (i & (i + 1)) - 1)
+            res += bit[i];
+        return res;
     }
+};
 
-    /****** Range Update Range Query ******/
-    // (bit array passed) bit[index] += value
+struct BIT_RURQ{
+    ll bit1[MAX], bit2[MAX]; int N;
+
+    void init(int n){ MEM(bit1, 0); MEM(bit2, 0); N=n; }
+
     void add(ll *bit, int i, ll value) {
         for (; i < N; i |= i + 1)
             bit[i] += value;
     }
-    // (bit array passed) sum[0..i]
     ll sum(ll *bit, int i) {
         ll res = 0;
         for (; i >= 0; i = (i & (i + 1)) - 1)
             res += bit[i];
         return res;
     }
-    // add 'value' to each element, from a to b
-    void add_rurq(int a, int b, ll value) {
-        add(bit, a, value);
-        add(bit, b, -value);
-        add(bit1, a, -value * (a - 1));
-        add(bit1, b, value * b);
+    // add 'value' to each element, from a to b; *use this in code*
+    void add(int a, int b, ll value) {
+        add(bit1, a, value);
+        add(bit1, b, -value);
+        add(bit2, a, -value * (a - 1));
+        add(bit2, b, value * b);
     }
     // sum[0...i]
-    ll sum_from_zero(int i){
-        return (sum(bit, i) * i + sum(bit1, i));
+    ll sum(int i){
+        return (sum(bit1, i) * i + sum(bit2, i));
     }
-    // sum[a...b]
-    ll sum_rurq(int a, int b) {
+    // sum[a...b]; *use this in code*
+    ll sum(int a, int b) {
         a--;
-        return sum_from_zero(b) - ((a<0)?0:sum_from_zero(a));
-    }
-
-    /*** Binary search on bit: find min p where sum[0..p] >= value ***/
-    int bs_bit(ll value){
-        int lf=0, rt=N-1, mid;
-        while(lf<=rt){
-            mid = (lf+rt)>>1;
-            ll res = sum(mid);
-            if(res == value)return mid;
-            else if (res > value) rt = mid-1;
-            else lf = mid+1;
-        }
-        return -1;
+        return sum(b) - ((a<0)?0: sum(a));
     }
 };
 
-BIT bit;
-int main(){
-    bit.init(10, false);
-    bit.set_v(5, 1);
-    bit.add(9, -2);
-    cout<<bit.sum(0, 10)<<"\n";           // -1
-
-    bit.init(6, false);
-    vector<int> v = {1, 2, 3, 4, 5, 6};
-    bit.create_from_vector(v);
-    for (int i = 0; i < 6; i++)
-        cout<<bit.get(i)<<" ";
-    cout<<endl;                           // 1 2 3 4 5 6
-
-    bit.init(8, false);
-    v = {0, 0, 1, 0, 0, 1, 0, 0};
-    bit.create_from_vector(v);
-    cout<< bit.bs_bit(2) << "\n";        // 5
-    cout<< bit.bs_bit(3) << "\n";        // -1
-
-    bit.init(10, false);
-    bit.add_rurq(0, 9, 1);
-    bit.add_rurq(0, 0, -2);
-    cout<<bit.sum_rurq(0, 9)<<endl;      // 8
+// Find the smallest index for which sum[0...index]>=value
+// Works for BIT_PURQ & BIT_RURQ
+int bs_bit(BIT_PURQ bit, ll value){
+//int bs_bit(BIT_RURQ bit, ll value){
+    int lf=0, rt=bit.N -1, mid;
+    while(lf<=rt){
+        mid = (lf+rt)>>1;
+        ll res = bit.sum(mid);
+        if(res == value)return mid;
+        else if (res > value) rt = mid-1;
+        else lf = mid+1;
+    }
+    return -1;
 }
 
+int main(){
+
+    BIT_PURQ bit_purq;
+    BIT_RUPQ bit_rupq;
+    BIT_RURQ bit_rurq;
+
+    bit_purq.init(10);
+    bit_purq.set_v(5, 1);
+    bit_purq.add(9, -2);
+    cout<<bit_purq.sum(0, 10)<<"\n";             // -1
+
+    bit_purq.init(6);
+    vector<int> v = {1, 2, 3, 4, 5, 6};
+    bit_purq.create_from_vector(v);
+    for (int i = 0; i < 6; i++)
+        cout<<bit_purq.get(i)<<" ";
+    cout<<endl;                                 // 1 2 3 4 5 6
+
+    bit_purq.init(8);
+    v = {0, 0, 1, 0, 0, 1, 0, 0};
+    bit_purq.create_from_vector(v);
+    cout<< bs_bit(bit_purq, 2) << "\n";        // 5
+    cout<< bs_bit(bit_purq, 3) << "\n";        // -1
+
+    bit_rupq.init(10);
+    bit_rupq.add(0, 2, 5);
+    bit_rupq.add(2, 4, 5);
+    cout<<bit_rupq.get(1) << " " << bit_rupq.get(2)
+        << " " << bit_rupq.get(3)<<"\n";       // 5 10 5
+
+    bit_rurq.init(10);
+    bit_rurq.add(0, 9, 1);
+    bit_rurq.add(0, 0, -2);
+    cout<<bit_rurq.sum(0, 9)<<endl;            // 8
+}
 
 // SOLVED
 /* LightOJ 1112 - Curious Robin Hood (PURQ)
