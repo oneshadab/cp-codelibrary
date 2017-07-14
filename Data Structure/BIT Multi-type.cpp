@@ -132,17 +132,18 @@ int main(){
     bit.init(8, false);
     v = {0, 0, 1, 0, 0, 1, 0, 0};
     bit.create_from_vector(v);
-    cout<< bit.bs_bit(2) << "\n";  // 5
-    cout<< bit.bs_bit(3) << "\n";  // -1
+    cout<< bit.bs_bit(2) << "\n";        // 5
+    cout<< bit.bs_bit(3) << "\n";        // -1
 
     bit.init(10, false);
     bit.add_rurq(0, 9, 1);
     bit.add_rurq(0, 0, -2);
-    cout<<bit.sum_rurq(9)<<endl;          // 8
+    cout<<bit.sum_rurq(0, 9)<<endl;      // 8
 }
 
-/** Solved Problems
- * LightOJ 1112 - Curious Robin Hood (PURQ)
+
+// SOLVED
+/* LightOJ 1112 - Curious Robin Hood (PURQ)
  * SPOJ UPDATEIT (RUPQ)
- *
- */
+ * SPOJ HORRIBLE (RURQ) */
+// _SOLVED
