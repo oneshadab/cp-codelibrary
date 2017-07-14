@@ -13,7 +13,7 @@
 using namespace std;
 
 #define MEM(a,x) memset(a,x,sizeof(a))
-#define MAX 300000
+#define MAX 100010
 #define ll long long
 
 struct BIT_PURQ{
