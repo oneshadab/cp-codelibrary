@@ -1,4 +1,4 @@
-//COMMENTS
+// COMMENTS
 /* ****** 0 based BIT ******
  * Source: http://code-library.herokuapp.com/fenwick-tree-extended/java
  * There are 3 kinds of BIT functions based on query and update:
@@ -6,7 +6,7 @@
  * 2. Range Update Point Query (RUPQ)
  * 3. Range Update Range Query (RURQ)
  */
-//_COMMENTS
+// _COMMENTS
 
 #include <bits/stdc++.h>
 
