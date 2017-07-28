@@ -105,7 +105,8 @@ int main() {
     a.build(s);
     cout << a.numDistinctSubstring() << "\n";  //15
 }
+
 // SOLVED
-/* SARRAY - Suffix Array (70)
- * DISUBSTR - Distinct Substrings */
+/* SPOJ SARRAY - Suffix Array (70)
+ * SPOJ DISUBSTR - Distinct Substrings */
 // _SOLVED
