@@ -168,7 +168,6 @@ int main(){
     bit_rurq.add(0, 0, -2);
     cout<<bit_rurq.sum(0, 9)<<endl;            // 8
 }
-
 // SOLVED
 /* LightOJ 1112 - Curious Robin Hood (PURQ)
  * SPOJ UPDATEIT (RUPQ)
