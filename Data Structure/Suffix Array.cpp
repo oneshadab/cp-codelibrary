@@ -41,9 +41,10 @@ struct SA {
         FOR(i, n)P[0][i] = _rank[s[i]] - 1;
         sa[0] = 0;
         for (stp = 1, cnt = 1; cnt < n; stp++, cnt <<= 1) {
-            FOR(i, n)L[i] = mk(mk(P[stp - 1][i], i + cnt < n ? P[stp - 1][i + cnt] : -1), i);
-            radix(1);
-            radix(0);
+            FOR(i, n)L[i] = mk( mk( P[stp - 1][i], i+cnt<n?
+                              P[stp - 1][i + cnt] : -1), i);
+
+            radix(1); radix(0);
             FOR(i, n)
                 P[stp][L[i].second] = i > 0 && L[i].first == L[i - 1].first?
                                       P[stp][L[i - 1].second] : i;
