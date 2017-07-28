@@ -38,7 +38,7 @@ struct _mcmf {
                 for (int i = last[u]; i != -1; i = edges[i].prev) {
                     int v = edges[i].v, w = edges[i].w;
                     if (E[u] == -1) continue;
-                    if (edges[i].cap && (E[v] == -1 || D[u] + w < D[v])) {
+                    if (edges[i].cap && (E[v]==-1 || D[u]+w < D[v])){
                         D[v] = D[u] + w;
                         E[v] = i;
                         found = true;
