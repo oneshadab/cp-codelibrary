@@ -29,7 +29,7 @@ using namespace std;
 #define FOR(i,N) FORR(i, 0, N)
 #define FORR(i,a,b) FOTR(i, a, b, 1)
 #define FOTR(i,a,b,c) for(int i=(a);i<(b);i+=(c))
-#define FOREACH(it, x) for(__typeof__((x).begin()) it=(x).begin();it!=(x).end();it++)
+#define FOREACH(it,x) for(__typeof__((x).begin())it=(x).begin();it!=(x).end();it++)
 #define MEM(a,x) memset(a,x,sizeof(a))
 #define BCHK(a,x) (((a)>>(x))&1)
 #define BSET(a,x) ((a)|(1<<(x)))
@@ -71,9 +71,7 @@ const double V_PI = 3.141592653589793;
 const double V_e = 2.718281828459045;
 
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
+    cpp_io();
 
     cout<<"Hello World\n";
 }
