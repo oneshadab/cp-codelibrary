@@ -1,5 +1,5 @@
 // COMMENTS
-/* ****** 0 based BIT ******
+/* ****** 0 indexed BIT ******
  * Source: http://code-library.herokuapp.com/fenwick-tree-extended/java
  * There are 3 kinds of BIT functions based on query and update:
  * 1. Point Update Range Query (PURQ)
@@ -28,28 +28,33 @@ struct BIT_PURQ{
             if (j < N) bit[j] += bit[i];
         }
     }
-    // bit[i] += value
+
+    // add value to bit[i]
     void add(int i, ll value) {
         for (; i < N; i |= i + 1)
             bit[i] += value;
     }
-    // sum[0..i]
+
+    // _sum[0..i]
     ll sum(int i) {
         ll res = 0;
         for (; i >= 0; i = (i & (i + 1)) - 1)
             res += bit[i];
         return res;
     }
-    // sum[a..b]
+
+    // _sum[a..b]
     ll sum(int a, int b) {
         return sum(b) - sum(a - 1);
     }
-    // value of bit[index]
+
+    // value of bit[i]
     ll get(int i) {
         return sum(i) - sum(i-1);
     }
-    // bit[index] = value
-    void set_v(int i, ll value) {
+
+    // bit[i] = value
+    void assign(int i, ll value) {
         add(i, -get(i) + value);
     }
 };
@@ -66,16 +71,20 @@ struct BIT_RUPQ{
             if (j < N) bit[j] += bit[i];
         }
     }
-    // bit[i] += value
+
+    // add 'value' to each element in range [i..N]
     void add(int i, ll value) {
         for (; i < N; i |= i + 1)
             bit[i] += value;
     }
-    // *use this add*
+
+
+    // add 'value' to each element in range [a..b]
     void add(int a, int b, ll value) {
         add(a, value);
         add(b + 1, -value);
     }
+
     // return value of bit[i]
     ll get(int i) {
         ll res = 0;
@@ -90,35 +99,38 @@ struct BIT_RURQ{
 
     void init(int n){ MEM(bit1, 0); MEM(bit2, 0); N=n; }
 
-    void add(ll *bit, int i, ll value) {
+    void _add(ll *bit, int i, ll value) {
         for (; i < N; i |= i + 1)
             bit[i] += value;
     }
-    ll sum(ll *bit, int i) {
+    ll _sum(ll *bit, int i) {
         ll res = 0;
         for (; i >= 0; i = (i & (i + 1)) - 1)
             res += bit[i];
         return res;
     }
-    // add 'value' to each element, from a to b; *use this in code*
+
+    // add 'value' to each element in range [a..b]
     void add(int a, int b, ll value) {
-        add(bit1, a, value);
-        add(bit1, b, -value);
-        add(bit2, a, -value * (a - 1));
-        add(bit2, b, value * b);
+        _add(bit1, a, value);
+        _add(bit1, b, -value);
+        _add(bit2, a, -value * (a - 1));
+        _add(bit2, b, value * b);
     }
+
     // sum[0...i]
     ll sum(int i){
-        return (sum(bit1, i) * i + sum(bit2, i));
+        return (_sum(bit1, i) * i + _sum(bit2, i));
     }
-    // sum[a...b]; *use this in code*
+
+    // sum[a...b]
     ll sum(int a, int b) {
         a--;
         return sum(b) - ((a<0)?0: sum(a));
     }
 };
 
-// Find the smallest index for which sum[0...index]>=value
+// Find the smallest index for which _sum[0...index]>=value
 // Works for BIT_PURQ & BIT_RURQ
 int bs_bit(BIT_PURQ bit, ll value){
 //int bs_bit(BIT_RURQ bit, ll value){
@@ -127,7 +139,7 @@ int bs_bit(BIT_PURQ bit, ll value){
         mid = (lf+rt)>>1;
         ll res = bit.sum(mid);
         if(res == value)return mid;
-        else if (res > value) rt = mid-1;
+        if (res > value) rt = mid-1;
         else lf = mid+1;
     }
     return -1;
@@ -140,7 +152,7 @@ int main(){
     BIT_RURQ bit_rurq;
 
     bit_purq.init(10);
-    bit_purq.set_v(5, 1);
+    bit_purq.assign(5, 1);
     bit_purq.add(9, -2);
     cout<<bit_purq.sum(0, 10)<<"\n";             // -1
 
