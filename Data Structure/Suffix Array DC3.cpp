@@ -39,7 +39,7 @@ struct SuffixArray{
             if (m) s12[c++] = i;
             m++;
         }
-        s12[c] = sa12[c] = s12[c + 1] = sa12[c + 1] = s12[c + 2] = sa12[c + 2] = 0;
+        s12[c] = sa12[c] = s12[c+1] = sa12[c+1] = s12[c+2] = sa12[c+2] = 0;
 
         radixsort(s12, sa12, ar + 2, c, lim + 1);
         radixsort(sa12, s12, ar + 1, c, lim + 1);
@@ -47,7 +47,7 @@ struct SuffixArray{
 
         counter = 0, j = -1;
         FOR(i,c){
-            if ((ar[sa12[i]] != j) || (ar[sa12[i] + 1] != k) || (ar[sa12[i] + 2] != l)){
+            if ((ar[sa12[i]] != j)||(ar[sa12[i]+1] != k)||(ar[sa12[i]+2] != l)){
                 counter++;
                 j = ar[sa12[i]], k = ar[sa12[i] + 1], l = ar[sa12[i] + 2];
             }
@@ -84,7 +84,7 @@ struct SuffixArray{
                     if ((ar[i] < ar[j]) || (ar[i] == ar[j] &&
                             ar[i + 1] < ar[j + 1]) || (ar[i] == ar[j] &&
                             ar[i + 1] == ar[j + 1] && s12[sa12[l] - n0 + 1] <=
-                                                      s12[(j /3) + n0]) ) sa[r] = i, l++;
+                            s12[(j /3) + n0]) ) sa[r] = i, l++;
                     else sa[r] = j, k++;
                 }
             }

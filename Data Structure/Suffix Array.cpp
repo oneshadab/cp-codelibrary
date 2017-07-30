@@ -26,8 +26,8 @@ struct SA {
             FOR(i, n)L[i] = {{P[stp-1][i], i+cnt<n? P[stp-1][i+cnt] : -1}, i};
             sort(L, L+n);
             FOR(i, n)
-                P[stp][L[i].second] =
-                        i>0 && L[i].first==L[i-1].first? P[stp][L[i - 1].second] : i;
+                P[stp][L[i].second] = i>0 &&
+                    L[i].first==L[i-1].first? P[stp][L[i - 1].second] : i;
         }
         FOR(i, n)sa[i] = L[i].second;
     }
