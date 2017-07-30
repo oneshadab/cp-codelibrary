@@ -50,7 +50,7 @@ struct SA {
         return ret;
     }
 
-    vector<string> distinctSubstirings(){
+    vector<string> distinctSubstrings(){
         int j = 0;
         vector<string> v;
         v.pb(s.substr(sa[0], n-sa[0]));
@@ -68,16 +68,16 @@ int main() {
     string s = "abcabc";
     a.build(s);
 
-    FOR(i, 6)cout << a.sa[i] << " ";      //3 0 4 1 5 2
+    FOR(i, 6)cout << a.sa[i] << " ";            //3 0 4 1 5 2
     cout << "\n\n";
 
-    cout << a.lcp(a.sa[0], a.sa[2]) << "\n";  // 0
-    cout << a.lcp(a.sa[0], a.sa[1]) << "\n";  // 3
+    cout << a.lcp(a.sa[0], a.sa[2]) << "\n";    // 0
+    cout << a.lcp(a.sa[0], a.sa[1]) << "\n";    // 3
     cout << a.lcp(a.sa[0], a.sa[0]) << "\n\n";  // 3
 
     s = "banana";
     a.build(s);
-    cout << a.numDistinctSubstring() << "\n";  //15
+    cout << a.numDistinctSubstring() << "\n";   //15
 }
 
 // SOLVED
