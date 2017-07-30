@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 
+#define tpname typename
+
 using namespace std;
 
 struct FastIO{
@@ -23,7 +25,7 @@ struct FastIO{
         flush();
     }
     /* For Numbers */
-    template<typename T, typename = typename enable_if<is_integral<T>::value, T>::type>
+    template<tpname T, tpname = tpname enable_if<is_integral<T>::value,T>::type>
     FastIO& operator>>(T& num){
         num = 0;
         char ch = nextChar(), neg = false;
@@ -33,7 +35,7 @@ struct FastIO{
         if(neg) num = -num;
         return *this;
     }
-    template<typename T, typename = typename enable_if<is_integral<T>::value, T>::type>
+    template<tpname T, tpname = tpname enable_if<is_integral<T>::value,T>::type>
     FastIO& operator<<(T num){
         int n = 0, neg = false;
         if(num < 0) neg = true, num = -num;

@@ -29,7 +29,7 @@ using namespace std;
 #define FOR(i,N) FORR(i, 0, N)
 #define FORR(i,a,b) FOTR(i, a, b, 1)
 #define FOTR(i,a,b,c) for(int i=(a);i<(b);i+=(c))
-#define FOREACH(it,x) for(__typeof__((x).begin())it=(x).begin();it!=(x).end();it++)
+#define FOREACH(i,x) for(__typeof__((x).begin())i=(x).begin();i!=(x).end();i++)
 #define MEM(a,x) memset(a,x,sizeof(a))
 #define BCHK(a,x) (((a)>>(x))&1)
 #define BSET(a,x) ((a)|(1<<(x)))
