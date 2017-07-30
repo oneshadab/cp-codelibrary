@@ -48,3 +48,7 @@ int main() {
         cout << mx << " " << c << "\n";
     }
 }
+
+// SOLVED
+/* SPOJ MSUBSTR */
+// _SOLVED
