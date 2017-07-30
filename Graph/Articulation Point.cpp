@@ -1,90 +1,100 @@
 #include<bits/stdc++.h>
 
+#define MEM(a,x) memset(a,x,sizeof(a))
+#define cpp_io() {ios_base::sync_with_stdio(false);cin.tie(NULL);}
+#define pii pair<int, int>
+#define pb push_back
+
 using namespace std;
 
-typedef pair<int, int> pii;
-
-namespace ArticulationPoint{
+//namespace ArticulationPoint
+namespace AP {
     const int NMAX = 110;
-    vector <pair<int, int> > vec;
+    vector<pair<int, int> > bridges;
     int low[NMAX], num[NMAX], parent[NMAX], counter, root, rootc;
-    bool visited[NMAX];
 
-    void clear(){
-        memset(visited, 0, sizeof(visited));
-        memset(low, -1, sizeof(low));
-        memset(num, -1, sizeof(num));
-        memset(parent, 0, sizeof(parent));
+    bool visited[NMAX];
+    int ap[NMAX]; //ap[i] stores the number of vertex will disconnect
+                  //if i is removed
+
+    void clear() {
+        MEM(visited, 0);
+        MEM(ap, 0);
+        MEM(low, -1);
+        MEM(num, -1);
+        MEM(parent, 0);
         counter = 0;
-        vec.clear();
+        rootc = 0;
+        bridges.clear();
     }
 
-    void find(vector<int> G[], int u){
-
+    void find(vector<int>const (&G)[NMAX], int u) {
+        visited[u] = true;
+        if(u==root)rootc = 0;
         low[u] = num[u] = counter++;
-        int i, j;
-        for(auto v: G[u]){
-            if (!visited[v]){
+        for (auto v: G[u]) {
+            if (!visited[v]) {
                 parent[v] = u;
-                visited[v] = true;
                 if (u == root)rootc++;
                 find(G, v);
+
+                //set Articulation Point
+                if (low[v] >= num[u])ap[u]++;
+
+                //set Bridge
                 if (low[v] > num[u]) {
                     int k = u, l = v;
-                    if(k>l)swap(k,l);
-                    vec.push_back(pii(k, l));
+                    if (k > l)swap(k, l);
+                    bridges.pb({k, l});
                 }
                 low[u] = min(low[u], low[v]);
-            }
-            else if (j != parent[u]){
+            } else if (v != parent[u]) {
                 low[u] = min(low[u], num[v]);
             }
         }
+        if(u==root && rootc < 2) ap[root] = 0;
     }
 }
 
-
-
-bool fnc(const pii &a, const pii &b)
-{
-    return (a.first < b.first);
-}
-int main(){
-    //freopen("796.txt", "r", stdin);
-    //ofstream cot("o.txt");
+//UVa 796 - Critical Links
+int main() {
+    cpp_io();
     stringstream ss;
     string s;
     int x, y, m, i, cs = 1;
     int n;
     while (cin >> n) {
-        getline (cin, s);
-        vector <int> grph[110];
-        for (i=0; i<n; i++){
-            getline (cin, s);
+        getline(cin, s);
+        vector<int> G[110];
+        for (i = 0; i < n; i++) {
+            getline(cin, s);
             ss.clear();
             ss.str(s);
-            ss>>x;
-            ss>>s;
-            while(ss>>y) {
-                grph[x].push_back(y);
+            ss >> x;
+            ss >> s;
+            while (ss >> y) {
+                G[x].pb(y);
             }
         }
-        ArticulationPoint::clear();
-        for (i=0; i<n; i++){
-            if(ArticulationPoint::visited[i])continue;
-            ArticulationPoint::root = i;
-            ArticulationPoint::visited[i] = true;
-            ArticulationPoint::rootc = 0;
-            ArticulationPoint::find(grph, i);
+        AP::clear();
+        for (i = 0; i < n; i++) {
+            if (AP::visited[i])continue;
+            AP::root = i;
+            AP::find(G, i);
         }
-        auto &vec = ArticulationPoint::vec;
+        auto &bridges = AP::bridges;
         y = 0;
-        sort (vec.begin(), vec.end(), fnc);
-        cout<<vec.size()<< " critical links\n";
-        for(i=0; i<vec.size(); i++) {
-            cout<<vec[i].first<<" - "<<vec[i].second<<"\n";
+        sort(bridges.begin(), bridges.end());
+        cout << bridges.size() << " critical links\n";
+        for (i = 0; i < bridges.size(); i++) {
+            cout << bridges[i].first << " - " << bridges[i].second << "\n";
         }
-        cout<<"\n";
-        ArticulationPoint::clear();
+        cout << "\n";
     }
 }
+
+// SOLVED
+/* UVa 796 - Critical Links
+ * UVa 10765 - Doves and bombs
+ * hackerearth tutorial: https://goo.gl/rD1Z1q */
+// _SOLVED
