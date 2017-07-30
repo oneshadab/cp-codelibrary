@@ -14,21 +14,21 @@ string preprocess(string s) {
     return t + "#$";
 }
 
-vector<int> LPS_Array(string str) {
+vector<int> PS_Array(string str) {
     string T = preprocess(str);
     int n = T.length(), C = 0, R = 0, LN;
-    vector<int> lps(n);
+    vector<int> ps(n);
     FORR(i, 1, n) {
-        LN = (R > i) ? min(R - i, lps[2 * C - i]) : 0;
+        LN = (R > i) ? min(R - i, ps[2 * C - i]) : 0;
         while (T[i + 1 + LN] == T[i - 1 - LN])LN++;
         if (i + LN > R) { C = i, R = i + LN; }
-        lps[i] = LN;
+        ps[i] = LN;
     }
-    return lps;
+    return ps;
     /*  Print Palindromic Substrings:
-    *   FOR(i, lps.size())
-    *       if(lps[i]>0)
-    *           cout<<s.substr((i-lps[i]-1)>>1, lps[i])<<"\n";
+    *   FOR(i, ps.size())
+    *       if(ps[i]>0)
+    *           cout<<s.substr((i-ps[i]-1)>>1, ps[i])<<"\n";
     */
 }
 
@@ -39,7 +39,7 @@ int main() {
     cin >> n;
     while (n--) {
         cin >> s;
-        vector<int> lps = LPS_Array(s);
+        vector<int> lps = PS_Array(s);
 
         int mx = 0, c = 0;
         for (auto v: lps) if (v > mx)mx = v;
