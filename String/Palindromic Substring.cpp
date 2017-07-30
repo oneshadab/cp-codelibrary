@@ -7,15 +7,15 @@
 
 using namespace std;
 
-string preprocess(string s) {
+string preprocess(const string &s) {
     int len = s.length();
     string t = "^";
     FOR(i, len) { t += "#", t += s[i]; }
     return t + "#$";
 }
 
-vector<int> PS_Array(string str) {
-    string T = preprocess(str);
+vector<int> PS_Array(const string &s) {
+    string T = preprocess(s);
     int n = T.length(), C = 0, R = 0, LN;
     vector<int> ps(n);
     FORR(i, 1, n) {
