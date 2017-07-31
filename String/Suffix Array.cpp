@@ -7,7 +7,6 @@ using namespace std;
 #define FOTR(i, a, b, c) for(int i=(a);i<(b);i+=(c))
 
 #define MEM(a, x) memset(a,x,sizeof(a))
-#define pb push_back
 #define pii pair<int, int>
 #define MAX 100010   //Keep MAX as small as possible
 #define MAXLG 17   //ceil(log2(MAX))
@@ -60,29 +59,6 @@ struct SuffixArray {
         }
         delete ar;
     }
-
-    int numDistinctSubstring() {
-        // call LcpArray() first
-        int ret = n - sa[0];
-        FORR(i, 1, n) {
-            ret += (n - sa[i]) - lcp[i - 1];
-        }
-        return ret;
-    }
-
-    vector<pii > distinctSubstrings() {
-        // call LcpArray() first
-        int j = 0;
-        vector<pii > v;
-        FOR(i, n - sa[0]) v.pb({sa[0], i + 1});
-        FORR(i, 1, n) {
-            int lv = lcp[i - 1];
-            for (int k = 0; k < n - sa[i] - lv; k++) {
-                v.pb({sa[i], sa[i] + (lv + k + 1)});
-            }
-        }
-        return v;
-    }
 } sa;
 
 int main() {
@@ -95,12 +71,6 @@ int main() {
     cout << sa.LcpXY(sa.sa[0], sa.sa[2]) << "\n";    // 0
     cout << sa.LcpXY(sa.sa[0], sa.sa[1]) << "\n";    // 3
     cout << sa.LcpXY(sa.sa[0], sa.sa[0]) << "\n\n";  // 3
-
-    sprintf(sa.str, "%s", "banana");
-    sa.Generate();
-    sa.LcpArray();
-    cout << sa.numDistinctSubstring() << "\n";       //15
-
 }
 
 // SOLVED
