@@ -22,7 +22,8 @@ struct SuffixArray {
         FOR(i, n) P[0][i] = str[i] - 1;
         sa[0] = 0;
         for (stp = 1, cnt = 1; cnt < n; stp++, cnt <<= 1) {
-            FOR(i, n)L[i] = {{P[stp - 1][i], i + cnt < n ? P[stp - 1][i + cnt] : -1}, i};
+            FOR(i, n) L[i] =
+                 { {P[stp - 1][i], (i + cnt < n)? P[stp - 1][i + cnt] : -1}, i};
             sort(L, L + n);
             FOR(i, n)P[stp][L[i].second] =
                              i > 0 && L[i].first == L[i - 1].first ?
@@ -31,7 +32,7 @@ struct SuffixArray {
         FOR(i, n)sa[i] = L[i].second;
     }
 
-    int LcpXY(int x, int y) { //x,y is starting positions of prefix in the string
+    int LcpXY(int x, int y) {  // LcpXY(sa[i], sa[j]) = lcp of suffix [i...j]
         int k, ret = 0;
         if (x == y)return n - x;
         for (k = stp - 1; k >= 0 && x < n && y < n; k--) {
