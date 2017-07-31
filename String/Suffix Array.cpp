@@ -32,7 +32,8 @@ struct SuffixArray {
         FOR(i, n)sa[i] = L[i].second;
     }
 
-    int LcpXY(int x, int y) {  // LcpXY(sa[i], sa[j]) = lcp of suffix [i...j]
+    int LcpXY(int x, int y) {  // LcpXY(i, j) = lcp of suffixes [i...j]
+        x = sa[x], y = sa[y];
         int k, ret = 0;
         if (x == y)return n - x;
         for (k = stp - 1; k >= 0 && x < n && y < n; k--) {
@@ -65,13 +66,18 @@ struct SuffixArray {
 int main() {
     sprintf(sa.str, "%s", "abcabc");
     sa.Generate();
+    sa.LcpArray();
 
-    FOR(i, 6)cout << sa.sa[i] << " ";                //3 0 4 1 5 2
+    FOR(i, 6)cout << sa.sa[i] << " ";   //3 0 4 1 5 2
     cout << "\n\n";
 
-    cout << sa.LcpXY(sa.sa[0], sa.sa[2]) << "\n";    // 0
-    cout << sa.LcpXY(sa.sa[0], sa.sa[1]) << "\n";    // 3
-    cout << sa.LcpXY(sa.sa[0], sa.sa[0]) << "\n\n";  // 3
+    FOR(i, 5)cout << sa.lcp[i] << " ";  //3 0 2 0 1
+    cout << "\n\n";
+
+    cout << sa.LcpXY(0,2) << "\n";      // 0
+    cout << sa.LcpXY(2,3) << "\n";      // 2
+    cout << sa.LcpXY(0,1) << "\n";      // 3
+    cout << sa.LcpXY(0,0) << "\n\n";    // 3
 }
 
 // SOLVED
