@@ -23,8 +23,6 @@
 #include <iterator>
 #include <utility>
 
-using namespace std;
-
 #define EPS 1e-9
 #define FOR(i,N) FORR(i, 0, N)
 #define FORR(i,a,b) FOTR(i, a, b, 1)

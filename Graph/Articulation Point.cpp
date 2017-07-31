@@ -18,13 +18,8 @@ namespace AP {
                   //if i is removed
 
     void clear() {
-        MEM(visited, 0);
-        MEM(ap, 0);
-        MEM(low, -1);
-        MEM(num, -1);
-        MEM(parent, 0);
-        counter = 0;
-        rootc = 0;
+        MEM(visited, 0); MEM(ap, 0); MEM(low, -1); MEM(num, -1); MEM(parent, 0);
+        counter = 0; rootc = 0;
         bridges.clear();
     }
 

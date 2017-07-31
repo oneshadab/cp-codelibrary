@@ -9,7 +9,7 @@ struct _dinic {
         //default flow and capacity (necessary for resetting flow)
 
         edge_t(int uu, int vv, int cc, int ff, int pp) {
-            u=uu, v=vv, def_cap=cap=cc, def_flow=flow=ff, prev=pp;
+            u = uu, v = vv, def_cap = cap = cc, def_flow = flow = ff, prev = pp;
         }
     };
 
@@ -93,8 +93,8 @@ struct _dinic {
     }
 
     //left and right side(excluding source and sink)
-    vector<int> vertex_cover(int src, int sink, int l_st, int l_ed,
-                             int r_st, int r_ed) {
+    vector<int> vertex_cover
+            (int src, int sink, int l_st, int l_ed, int r_st, int r_ed) {
 
         memset(cover, 0, sizeof(cover));
         bfs(src, sink);
