@@ -14,6 +14,7 @@ struct _mcmf {
     int last[NMAX];
     int D[NMAX]; // Distance from source
     int E[NMAX]; // Edge used to get to u
+    bool expand[NMAX]; // Edge used to get to u
 
     void reset() {
         edges.clear();
@@ -27,22 +28,25 @@ struct _mcmf {
         last[v] = edges.size() - 1;
     }
 
-    bool bell_bfs(int src, int sink) {
-        for (int u = 0; u < NMAX; u++) D[u] = NINF, E[u] = -1;
-        int found = true;
-        D[src] = 0;
-        E[src] = -2;
-        for (int k = 0; k < NMAX && found; k++) {
-            found = false;
-            for (int u = 0; u < NMAX; u++) {
-                for (int i = last[u]; i != -1; i = edges[i].prev) {
-                    int v = edges[i].v, w = edges[i].w;
-                    if (E[u] == -1) continue;
-                    if (edges[i].cap && (E[v]==-1 || D[u]+w < D[v])){
-                        D[v] = D[u] + w;
-                        E[v] = i;
-                        found = true;
-                    }
+    bool spfa(int src, int sink) {
+        for (int u = 0; u < NMAX; u++)
+            D[u] = NINF, E[u] = -1, expand[u] = false;
+        queue<int> que;
+        que.push(src);
+        D[src] = 0, E[src] = -2, expand[src] = true;
+        while(!que.empty()){
+            int u = que.front();
+            que.pop();
+            if(expand[u] == false) continue;
+            expand[u] = false;
+            for (int i = last[u]; i != -1; i = edges[i].prev) {
+                int v = edges[i].v, w = edges[i].w;
+                if (E[u] == -1) continue;
+                if (edges[i].cap && (E[v]==-1 || D[u]+w < D[v])){
+                    D[v] = D[u] + w;
+                    E[v] = i;
+                    expand[v] = true;
+                    que.push(v);
                 }
             }
         }
@@ -52,7 +56,7 @@ struct _mcmf {
     pair<int, int> max_flow(int src, int sink) {
         int mflow = 0;
         int mcost = 0;
-        while (bell_bfs(src, sink)) {
+        while (spfa(src, sink)) {
             int flow = NINF;
             for (int i = E[sink]; i >= 0; i = E[edges[i].u]) {
                 flow = min(flow, edges[i].cap);
