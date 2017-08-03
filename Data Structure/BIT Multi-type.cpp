@@ -5,7 +5,7 @@
  * 1. Point Update Range Query (PURQ)
  * 2. Range Update Point Query (RUPQ)
  * 3. Range Update Range Query (RURQ)
- */
+ */ 
 // _COMMENTS
 
 #include <bits/stdc++.h>
