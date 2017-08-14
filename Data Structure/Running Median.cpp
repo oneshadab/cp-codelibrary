@@ -12,8 +12,8 @@ using namespace std;
 
 struct running_median{
 
-    priority_queue<ll, vector<ll>,    less<ll> > lh;  //left half of sorted values
-    priority_queue<ll, vector<ll>, greater<ll> > rh;  //right half of sorted values
+    priority_queue<ll, vector<ll>,   less<ll> >lh; //left-half of sorted values
+    priority_queue<ll, vector<ll>,greater<ll> >rh; //right-half of sorted values
 
     void INSERT(ll val){
         if(lh.empty() || (!rh.empty() && val < rh.top())) lh.push(val);
