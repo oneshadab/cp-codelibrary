@@ -72,18 +72,25 @@ struct Matrix{
         }
         return C;
     }
-
+    
+    inline static Matrix Identity(int R, int C){
+        Matrix M(R, C);
+        for(int i=0; i<min(R, C); i++)
+            M[i][i] = 1;
+        return M;
+    }
+    
+    inline Matrix expo(ll e){
+        Matrix M = *this;
+        Matrix ret = Matrix::Identity(R, C);
+        while(e){
+            if(e&1) ret = ret * M;
+            M = M * M, e>>=1;
+        }
+        return ret;
+    }
 };
 
-Matrix expo(Matrix M, ll e)
-{
-    Matrix ret = M;
-    while(e){
-        if(e&1) ret = ret * M;
-        M = M * M, e>>=1;
-    }
-    return ret;
-}
 
 int main()
 {

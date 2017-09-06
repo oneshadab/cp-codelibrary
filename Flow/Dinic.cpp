@@ -13,13 +13,14 @@ struct _dinic {
         }
     };
 
-    const static int MAX = 500;
+    const static int NMAX = 500;
+    const static int NINF = 1000000000;
     vector<edge_t> edges;
 
-    int last[MAX + 10];
-    int lvl[MAX + 10];
-    int ptr[MAX + 10];
-    int cover[MAX + 10];
+    int last[NMAX + 10];
+    int lvl[NMAX + 10];
+    int ptr[NMAX + 10];
+    int cover[NMAX + 10];
 
     void reset() {
         memset(last, -1, sizeof(last));
@@ -85,7 +86,7 @@ struct _dinic {
         int ret = 0;
         while (bfs(src, sink)) {
             memcpy(ptr, last, sizeof(last));
-            while (int pushed = dfs(src, sink, INT_MAX)) {
+            while (int pushed = dfs(src, sink, NINF)) {
                 ret += pushed;
             }
         }

@@ -2,7 +2,11 @@
 
 using namespace std;
 
+
 #define EPS 1e-9
+#define For(i,N) FOR(i,N)
+#define Forr(i,a,b) FORR(i,a,b)
+#define Fotr(i,a,b,c) FOTR(i,a,b,c)
 #define FOR(i,N) FORR(i, 0, N)
 #define FORR(i,a,b) FOTR(i, a, b, 1)
 #define FOTR(i,a,b,c) for(int i=(a);i<(b);i+=(c))
