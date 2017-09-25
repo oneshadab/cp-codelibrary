@@ -5,7 +5,7 @@ using namespace std;
 
 //LCA with Sparse Table
 struct LCA{
-    static const int NMAX = 200000;
+    static const int NMAX = 200100; // Must be atleast twice the number of nodes
     static const int WIDTH = 20;
     int F[NMAX+10], L[NMAX+10], D[NMAX+10], lst;
     int idx [NMAX+10][WIDTH+2];
