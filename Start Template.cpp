@@ -22,8 +22,8 @@ using namespace std;
 #define cpp_io() {ios_base::sync_with_stdio(false);cin.tie(NULL);}
 #define BUFFSIZE 30000
 #define INF 1000000000
-#define MAX 3000010
-#define MOD 1000000007
+#define MAX 300010
+#define MOD 1000003
 #define pb push_back
 #define mkpr make_pair
 #define pii pair<int, int>
@@ -31,16 +31,17 @@ using namespace std;
 #define ll long long
 #define fi first
 #define si second
+#define all(x) x.begin(), x.end()
 
 char CRTBUFF[BUFFSIZE];
-#define dbg(args...) {cout<<"-->";debugger::call(#args,args);cout<<"\n";}
+#define dbg(args...) {cerr<<"-->";debugger::call(#args,args);cerr<<"\n";}
 struct debugger {
     static void call(const char* it) {}
     template<typename T, typename ... aT>
     static void call(const char* it, T a, aT... rest) {
         string b;
         for (; *it&&*it != ','; ++it) if (*it != ' ')b += *it;
-        cout << b << "=" << a << " ";
+        cerr << b << "=" << a << " ";
         call(++it, rest...);
     }
 };
