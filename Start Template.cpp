@@ -29,6 +29,8 @@ using namespace std;
 #define pii pair<int, int>
 #define PI acos(-1)
 #define ll long long
+#define fi first
+#define si second
 
 char CRTBUFF[BUFFSIZE];
 #define dbg(args...) {cout<<"-->";debugger::call(#args,args);cout<<"\n";}
@@ -45,9 +47,9 @@ struct debugger {
 
 int main(){
     cpp_io();
-#ifndef ONLINE_JUDGE
-    read();
-//    write();
-#endif
+    #ifndef ONLINE_JUDGE
+        read();
+    //    write();
+    #endif
 
 }
