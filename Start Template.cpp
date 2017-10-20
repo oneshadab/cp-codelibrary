@@ -23,7 +23,7 @@ using namespace std;
 #define BUFFSIZE 30000
 #define INF 1000000000
 #define MAX 300010
-#define MOD 1000003
+#define MOD 1000000007
 #define pb push_back
 #define mkpr make_pair
 #define pii pair<int, int>
@@ -48,9 +48,9 @@ struct debugger {
 
 int main(){
     cpp_io();
-    #ifndef ONLINE_JUDGE
+    #ifdef LOCAL
         read();
-    //    write();
+        //write();
     #endif
 
 }
