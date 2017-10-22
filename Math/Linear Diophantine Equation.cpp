@@ -16,7 +16,7 @@ ll egcd(ll a, ll b, ll &x, ll &y) {
     return d;
 }
 
-//Ax + By = C
+//Ax + By = C; Doesn't handle A = B = 0
 //More solutions: x' = x + (k*b) / g, y' = y - (k*a) / g
 bool LDE_One(ll a, ll b, ll c, ll &x0, ll &y0, ll &g) {
     g = egcd (abs(a), abs(b), x0, y0);
