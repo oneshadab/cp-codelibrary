@@ -21,18 +21,22 @@ struct item {
     }
 } items[MAX];
 
+struct NODE{
+    int len, val;
+}tree[MAX*2];
+
 int A[MAX];
-int tree[MAX * 2][2];
 
 void update(int node, int first, int last, int l, int r, int v) {
     int mid = (first + last) >> 1, ch1 = node << 1, ch2 = ch1 | 1;
+    NODE &cnd = tree[node];
     if (first >= l && last <= r) {
-        tree[node][1] += v;
-        if (tree[node][1]) {
-            tree[node][0] = A[last - 1] - A[first - 2];
+        cnd.val += v;
+        if (cnd.val) {
+            cnd.len = A[last - 1] - A[first - 2];
         } else {
-            if (first != last)tree[node][0] = tree[ch1][0] + tree[ch2][0];
-            else tree[node][0] = 0;
+            if (first != last)cnd.len = tree[ch1].len + tree[ch2].len;
+            else cnd.len = 0;
         }
         return;
     }
@@ -42,8 +46,8 @@ void update(int node, int first, int last, int l, int r, int v) {
         update(ch1, first, mid, l, r, v);
         update(ch2, mid + 1, last, l, r, v);
     }
-    if (tree[node][1])tree[node][0] = A[last - 1] - A[first - 2];
-    else tree[node][0] = tree[ch1][0] + tree[ch2][0];
+    if (cnd.val)cnd.len = A[last - 1] - A[first - 2];
+    else cnd.len = tree[ch1].len + tree[ch2].len;
 }
 
 int main() {
@@ -75,7 +79,7 @@ int main() {
         ll ans = 0, p = 0;
         FOR(i, n * 2) {
             x1 = items[i].x;
-            ans += tree[1][0] * (x1 - p) * 1LL;
+            ans += tree[1].len * (x1 - p) * 1LL;
             do {
                 if (items[i].y1 != items[i].y2) {
                     if (items[i].type)
