@@ -15,9 +15,10 @@ struct SuffixArray {
     pair<pii, int> L[MAX];
     int P[MAXLG + 1][MAX], n, stp, cnt, sa[MAX], lcp[MAX];
     char str[MAX];
-
+    
     void Generate() {
         MEM(L, 0);
+        
         n = strlen(str);
         FOR(i, n) P[0][i] = str[i] - 1;
         sa[0] = 0;
