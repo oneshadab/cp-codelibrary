@@ -70,7 +70,6 @@ int main(){ /// hash = 942531
                 ar[i] = (x * fuck) + str[i][j + c];
             }
         }
-
         printf("%d\n", res);
     }
     return 0;
