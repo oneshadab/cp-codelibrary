@@ -11,12 +11,14 @@ using namespace std;
 
 struct FastIO {
     static const int MaxSize = 8192;
+    bool isEOF;
+    
     char in[MaxSize+10], out[MaxSize+10], buffer[MaxSize+10];
     int inPos, inSize, outSize;
-
+    
     char nextChar() {
         if (inPos == inSize) inSize = fread(in, sizeof(char), MaxSize, stdin), inPos = 0;
-        if (inPos == inSize) return EOF;
+        if (inPos == inSize) return isEOF = true, EOF;
         return in[inPos++];
     }
 
@@ -33,6 +35,11 @@ struct FastIO {
     ~FastIO() {
         flush();
     }
+    
+    /* For EOF */
+    explicit operator bool() const {
+        return !isEOF;
+    }
 
     /* For Numbers */
     template<
@@ -41,9 +48,9 @@ struct FastIO {
     FastIO& operator>>(T &num) {
         num = 0;
         char ch = nextChar(), neg = false;
-        while (!isdigit(ch) && ch != '-' && ch != '+') ch = nextChar();
-        if (ch == '-' || ch == '+') neg = (ch == '-'), ch = nextChar();
-        while (isdigit(ch)) num = num * 10 + ch - '0', ch = nextChar();
+        while (ch != EOF && !isdigit(ch) && ch != '-' && ch != '+') ch = nextChar();
+        if (ch != EOF && ch == '-' || ch == '+') neg = (ch == '-'), ch = nextChar();
+        while (ch != EOF && isdigit(ch)) num = num * 10 + ch - '0', ch = nextChar();
         if (neg) num = -num;
         return *this;
     }
@@ -75,8 +82,8 @@ struct FastIO {
     FastIO& operator>>(string &s) {
         s.clear();
         char ch = nextChar();
-        while (ch == ' ' || ch == '\n') ch = nextChar();
-        while (ch != ' ' && ch != '\n') s.push_back(ch), ch = nextChar();
+        while (ch != EOF && ch == ' ' || ch == '\n') ch = nextChar();
+        while (ch != EOF && ch != ' ' && ch != '\n') s.push_back(ch), ch = nextChar();
         return *this;
     }
 
@@ -91,7 +98,6 @@ struct FastIO {
 
 int main() {
     //SPOJ INOUTTEST
-    
     int n;
     fio >> n;
     for (int i = 0; i < n; i++) {
@@ -100,3 +106,4 @@ int main() {
         fio << (a * b) << "\n";
     }
 }
+ 
