@@ -2,6 +2,13 @@
 
 using namespace std;
 
+/*
+    Enables reading 128-bit integers
+*/
+#ifdef __SIZEOF_INT128__
+  template<> struct std::is_integral<__int128_t>: true_type {};
+#endif
+
 struct FastIO {
     static const int MaxSize = 8192;
     char in[MaxSize + 10], out[MaxSize], buffer[MaxSize];
