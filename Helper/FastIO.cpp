@@ -87,15 +87,13 @@ struct FastIO {
 } fio;
 
 int main() {
-    //SPOJ INTEST
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    long long n, k, ans = 0;
-    fio >> n >> k;
+    //SPOJ INOUTTEST
+    
+    int n;
+    fio >> n;
     for (int i = 0; i < n; i++) {
-        int x;
-        fio >> x;
-        if (x % k == 0) ans++;
+        int a, b;
+        fio >> a >> b;
+        fio << (a * b) << "\n";
     }
-    fio << ans;
 }
