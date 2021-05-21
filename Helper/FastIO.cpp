@@ -11,23 +11,23 @@ using namespace std;
 
 struct FastIO {
     static const int MaxSize = 8192;
-    char in[MaxSize + 10], out[MaxSize], buffer[MaxSize];
-    int len, pos, cnt;
+    char in[MaxSize+10], out[MaxSize+10], buffer[MaxSize+10];
+    int inPos, inSize, outSize;
 
     char nextChar() {
-        if (pos == len) len = fread(in, sizeof(char), MaxSize, stdin), pos = 0;
-        if (pos == len) return EOF;
-        return in[pos++];
+        if (inPos == inSize) inSize = fread(in, sizeof(char), MaxSize, stdin), inPos = 0;
+        if (inPos == inSize) return EOF;
+        return in[inPos++];
     }
 
     void printChar(char ch) {
-        if (cnt == MaxSize) flush();
-        out[cnt++] = ch;
+        if (outSize == MaxSize) flush();
+        out[outSize++] = ch;
     }
 
     void flush() {
-        if (cnt) fwrite(out, sizeof(char), cnt, stdout);
-        cnt = 0;
+        if (outSize) fwrite(out, sizeof(char), outSize, stdout);
+        outSize = 0;
     }
 
     ~FastIO() {
@@ -35,9 +35,10 @@ struct FastIO {
     }
 
     /* For Numbers */
-    template<typename T,
-            typename = typename enable_if<is_integral<T>::value, T>::type>
-    FastIO &operator>>(T &num) {
+    template<
+        typename T,
+        typename = typename enable_if<is_integral<T>::value, T>::type>
+    FastIO& operator>>(T &num) {
         num = 0;
         char ch = nextChar(), neg = false;
         while (!isdigit(ch) && ch != '-' && ch != '+') ch = nextChar();
@@ -47,9 +48,10 @@ struct FastIO {
         return *this;
     }
 
-    template<typename T,
-            typename = typename enable_if<is_integral<T>::value, T>::type>
-    FastIO &operator<<(T num) {
+    template<
+        typename T,
+        typename = typename enable_if<is_integral<T>::value, T>::type>
+    FastIO& operator<<(T num) {
         int n = 0, neg = false;
         if (num < 0) neg = true, num = -num;
         while (num || !n) buffer[n++] = num % 10 + '0', num = num / 10;
@@ -59,18 +61,18 @@ struct FastIO {
     }
 
     /* For Characters */
-    FastIO &operator>>(char &ch) {
+    FastIO& operator>>(char &ch) {
         ch = nextChar();
         return *this;
     }
 
-    FastIO &operator<<(char ch) {
+    FastIO& operator<<(char ch) {
         printChar(ch);
         return *this;
     }
 
     /*For Strings */
-    FastIO &operator>>(string &s) {
+    FastIO& operator>>(string &s) {
         s.clear();
         char ch = nextChar();
         while (ch == ' ' || ch == '\n') ch = nextChar();
@@ -78,10 +80,11 @@ struct FastIO {
         return *this;
     }
 
-    FastIO &operator<<(string s) {
+    FastIO& operator<<(string s) {
         for (auto ch: s) printChar(ch);
         return *this;
     }
+    
     /*For Doubles */
 
 } fio;
