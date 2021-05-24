@@ -6,7 +6,7 @@ using namespace std;
     Enables reading 128-bit integers
 */
 #ifdef __SIZEOF_INT128__
-  template<> struct std::is_integral<__int128_t>: true_type {};
+    namespace std { template<> struct is_integral<__int128_t>: true_type {}; }
 #endif
 
 struct FastIO {
